@@ -56,6 +56,8 @@ wss.on("connection", (socket) => {
     })
 })
 
+
+
 let host = config.host ? config.host : "localhost"
 let port = config.port ? config.port : 8080
 server.listen(port, host)
