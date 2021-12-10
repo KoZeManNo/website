@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "node-static": "^0.7.11",
+    "ws": "^8.3.0"
+  },
+  "name": "website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "KoZeManNo",
+  "license": "ISC"
+}
