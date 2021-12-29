@@ -8,8 +8,8 @@ let server
 if (config.ssl) {
     const https = require("https")
     server = https.createServer({
-        cert: config.ssl.certificate,
-        key: config.ssl.key
+        cert: fs.readFileSync(config.ssl.certificate),
+        key: fs.readFileSync(config.ssl.key)
     })
 } else {
     const http = require("http")
