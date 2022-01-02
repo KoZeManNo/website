@@ -53,7 +53,7 @@ wss.on("connection", (socket) => {
     socket.send(getStats())
     msgSent++
     
-    socket.on("message", (data) => {
+    socket.on("message", data => {
         msgReceived++
         var message = data.toString()
 
@@ -69,8 +69,12 @@ wss.on("connection", (socket) => {
             }
         }
     })
-    socket.on("close", () => {
-        users = users.filter(user => user !== this)
+    socket.on("close", socket => {
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].readyState === WebSocket.CLOSING || users[i].readyState === WebSocket.CLOSED) {
+                users.splice(i, 1)
+            }
+        }
     })
 })
 
