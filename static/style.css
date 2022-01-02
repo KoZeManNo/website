@@ -27,6 +27,34 @@ input {
     right: 0;
 }
 
+.tabbar {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    width: 150px;
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+
+    margin-left: auto;
+    margin-bottom: auto;
+    margin-right: auto;
+
+    pointer-events: none;
+}
+.tabbar a {
+    pointer-events: auto;
+    cursor: pointer;
+}
+.tabbar img {
+    background-color: #1C2541;
+    border-radius: 9999px;
+    padding: 8px;
+}
+
 .socialbar {
     position: absolute;
     top: 0;
@@ -34,10 +62,10 @@ input {
     bottom: 20px;
     right: 0;
 
-    width: 200px;
+    width: 240px;
     height: 48px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     margin-top: auto;
     margin-left: auto;
@@ -46,4 +74,51 @@ input {
     
     background-color: #1C2541;
     border-radius: 16px;
+}
+
+
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    width: 400px;
+    height: 400px;
+
+    margin: auto;
+    padding: 8px;
+
+    background-color: #1C2541;
+    border-radius: 32px;
+}
+.close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    margin-bottom: auto;
+    margin-left: auto;
+}
+#info p {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+#info div {
+    position: absolute;
+    right: 0;
+    bottom: 12px;
+    left: 0;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#info div *{
+    margin: 4px;
+}
+#stat span {
+    display: block;
+    margin: 4px;
 }

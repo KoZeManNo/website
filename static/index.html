@@ -19,6 +19,15 @@
         <div><input type="color"></div>
     </div>
 
+    <div class="tabbar">
+        <a onclick="toggleInfoModal()">
+            <img src="icons/information.svg">
+        </a>
+        <a onclick="toggleStatModal()">
+            <img src="icons/chart-box.svg">
+        </a>
+    </div>
+
     <div class="socialbar">
         <a href="https://github.com/KoZeManNo">
             <img src="icons/github.svg">
@@ -29,6 +38,45 @@
         <a href="https://discordapp.com/users/232450405911494658">
             <img src="icons/discord.svg">
         </a>
+        <a href="https://steamcommunity.com/id/KoZeManNo">
+            <img src="icons/steam.svg">
+        </a>
+    </div>
+
+    <div class="modal" id="info" style="display:none">
+        <a class="close" onclick="toggleInfoModal()">
+            <img src="icons/close.svg">
+        </a>
+        <h1>Information</h1>
+        <p>
+            If you want to get in contact, your best bet would be via email.
+            I only add people I know on my Discord & Steam accounts,
+            and I don't check my GitHub account often.
+        </p>
+        <p>
+            I don't really care if my code is perfect. At least for now.
+            So please don't make a pull request if you see any inconsistencies.
+            I like to work on my own on my GitHub projects.
+            They are public so people can check them out without asking me.
+        </p>
+        <div>
+            <h3>Made by KoZeManNo</h3>
+            <a href="https://github.com/KoZeManNo/Website"><img src="icons/github.svg"></a>
+        </div>
+    </div>
+    <div class="modal" id="stat" style="display:none">
+        <a class="close" onclick="toggleStatModal()">
+            <img src="icons/close.svg">
+        </a>
+        <h1>Statistics</h1>
+        <h3>WebSocket</h3>
+        <span>Active connections: <field>0</field></span>
+        <span>Messages since boot (sent / received): <field>0</field></span>
+        <h3>System</h3>
+        <span>Ram free/used (MB): <field>0 / 0</field></span>
+        <span>Average CPU usage: <field>0%</field></span>
+        <h3>Other</h3>
+        <span>Requests since boot: <field>0</field></span>
     </div>
 </body>
 </html>

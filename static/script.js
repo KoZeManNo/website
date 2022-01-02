@@ -1,18 +1,31 @@
 // Regex to match message with one color
-// /^ $/: Match entire string, not just part of it
+// /^ $/: Match start to end
 // [0-8]: A number from 0 to 8
 // [a-f0-9]{6}: 6 lowercase hex characters
 const one = /^[0-8][a-f0-9]{6}$/
 // Regex to match message with all colors
-// /^ $/: Match entire string, not just part of it
+// /^ $/: Match start to end
 // [a-f0-9]{54}: 6*9 lowercase hex characters
 const all = /^[a-f0-9]{54}$/
 
 const background = document.getElementById("background")
 // Filtering background.childNodes divs
 // because there are unwanted #text nodes
-const panels = Array.from(background.childNodes).filter((node) => {
+// (probably the newlines used for readability)
+const panels = Array.from(background.childNodes).filter(node => {
     return node.nodeName === "DIV"
+})
+const statistics = Array.from(document.getElementById("stat").childNodes).filter(node => {
+    return node.nodeName === "SPAN"
+})
+const fields = statistics.map(value => {
+    let nodes = value.childNodes
+    for (var i = 0; i < nodes.length; i++) {
+        let node = nodes[i]
+        if (node.tagName === "FIELD") {
+            return node
+        }
+    }
 })
 
 let socket
@@ -48,11 +61,16 @@ function connect() {
             let index = message.charAt(0)
             let color = message.substring(1)
             updateColor(index, color)
+        } else { // Assume this message is transmitting stats
+            let stats = message.split(",")
+            for (var i = 0; i < stats.length; i++) {
+                fields[i].innerHTML = stats[i]
+            }
         }
     })
 }
 
-// Reconnect socket when window gets focused,
+// Reconnect socket when the window gets focused,
 // because it often disconnects when it's not
 window.onfocus = () => {
     if (socket.readyState === WebSocket.CLOSED) {
@@ -79,4 +97,24 @@ for (let i = 0; i < panels.length; i++) {
     colorPicker.addEventListener("change", () => {
         socket.send(i + colorPicker.value.substring(1))
     })
+}
+
+
+const infoModal = document.getElementById("info")
+const statModal = document.getElementById("stat")
+function toggleInfoModal() {
+    statModal.style.display = "none"
+    if (infoModal.style.display === "none") {
+        infoModal.style.display = "inline-block"
+    } else {
+        infoModal.style.display = "none"
+    }
+}
+function toggleStatModal() {
+    infoModal.style.display = "none"
+    if (statModal.style.display === "none") {
+        statModal.style.display = "inline-block"
+    } else {
+        statModal.style.display = "none"
+    }
 }

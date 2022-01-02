@@ -1,4 +1,5 @@
 const fs = require("fs")
+const os = require("os")
 const config = JSON.parse(fs.readFileSync("config.json"))
 
 const WebSocket = require("ws")
@@ -13,7 +14,7 @@ if (config.ssl) {
     })
 } else {
     const http = require("http")
-    server = http.createServer({})
+    server = http.createServer()
 }
 
 
@@ -22,8 +23,20 @@ const format = /^[0-8][a-f0-9]{6}$/
 var users = []
 var colors = ["000000", "000000", "000000", "000000", "000000", "000000", "000000", "000000", "000000"]
 
+var requests = 0
+var msgSent = 0
+var msgReceived = 0
+
+function getStats() {
+    let memoryFree = Math.round(os.freemem() / (1024 * 1024))
+    let memoryTotal = Math.round(os.totalmem() / (1024 * 1024))
+    let cpuAverage = Math.round(os.loadavg()[0] * 100) + "%"
+    return `${users.length},${msgSent} / ${msgReceived},${memoryFree} / ${memoryTotal},${cpuAverage},${requests}`
+}
+
 let file = new Static.Server("./static")
 server.on("request", (req, res) => {
+    requests++
     req.addListener("end", () => {
         file.serve(req, res)
     }).resume()
@@ -36,8 +49,12 @@ let wss = new WebSocket.Server({
 wss.on("connection", (socket) => {
     users.push(socket)
     socket.send(colors.join(""))
+    msgSent++
+    socket.send(getStats())
+    msgSent++
     
     socket.on("message", (data) => {
+        msgReceived++
         var message = data.toString()
 
         if (format.test(message)) {
@@ -47,6 +64,7 @@ wss.on("connection", (socket) => {
                 colors[index] = color
                 users.forEach((user) => {
                     user.send(message)
+                    msgSent++
                 })
             }
         }
@@ -61,3 +79,13 @@ wss.on("connection", (socket) => {
 let host = config.host ? config.host : "localhost"
 let port = config.port ? config.port : 8080
 server.listen(port, host)
+
+
+
+setInterval(() => {
+    let stats = getStats()
+    users.forEach(user => {
+        user.send(stats)
+        msgSent++
+    })
+}, 5000)
