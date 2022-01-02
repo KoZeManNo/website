@@ -1,5 +1,3 @@
-# Website
-
 ## Material Design Icons
 
 This application uses Material Design Icons (https://materialdesignicons.com, https://github.com/google/material-design-icons). This library is available under the Apache 2.0 license, which can be obtained from http://www.apache.org/licenses/LICENSE-2.0.
