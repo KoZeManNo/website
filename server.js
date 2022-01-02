@@ -36,8 +36,8 @@ function getStats() {
 
 let file = new Static.Server("./static")
 server.on("request", (req, res) => {
-    requests++
     req.addListener("end", () => {
+        requests++
         file.serve(req, res)
     }).resume()
 })
